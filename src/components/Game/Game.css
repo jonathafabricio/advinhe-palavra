@@ -1,0 +1,39 @@
+input {
+    padding: 0px 20px;
+    border: none;
+    border-radius: 5px;
+    width: 1rem;
+    font-size: 1rem;
+    width: 2.2rem;
+    height: 2.5rem;
+    margin-right: 0.8rem;
+}
+
+.points span {
+    font-weight: bold;
+}
+
+.tip span {
+    text-transform: uppercase;
+    color: #ECFA00;
+    border-bottom: 1px solid pink;
+}
+
+.wordContainer {
+    display: flex;
+    margin: 1.5rem;
+    padding: 1.5rem;
+    border: 20px solid darkred;
+}
+
+.letter, .blankSquare {
+    font-size: 70px;
+    border: 3px solid black;
+    width: 6rem;
+    height: 6rem;
+    text-transform: uppercase;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+}
+
