@@ -1,6 +1,13 @@
 import './Game.css'
 import React, { useState, useRef } from 'react'
 
+function formatCategoryName(category) {
+  return category
+    .replace(/([A-Z])/g, ' $1')
+    .trim()
+    .toUpperCase();
+}
+
 const Game = ({
     verifyLetter,
     pickedWord,
@@ -26,6 +33,8 @@ const Game = ({
         letterInputRef.current.focus()
     }
 
+    const formattedCategory = formatCategoryName(pickedCategory);
+
     return (
         <div className="game">
             <p className="points">
@@ -33,7 +42,7 @@ const Game = ({
             </p>
             <h1>Advinhe a palavra:</h1>
             <h3 className="tip">
-                Dica sobre a palavra: <span>{pickedCategory}</span>
+                Dica sobre a palavra: <span>{formattedCategory}</span>
             </h3>
             <p>Você ainda tem {guesses} tentativa(s).</p>
             <div className="wordContainer">
@@ -48,7 +57,7 @@ const Game = ({
             <div className="letterContainer">
                 <p>Tente advinhar uma letra da palavra:</p>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" name="letter" maxLength="1" required onChange={(e) =>
+                    <input className='letterInput' type="text" name="letter" placeholder='digite' maxLength="1" required onChange={(e) =>
                         setLetter(e.target.value)}
                         value={letter}
                         ref={letterInputRef}
@@ -62,7 +71,6 @@ const Game = ({
                     <span key={i}>{letter}, </span>
                 ))}
             </div>
-
         </div>
     )
 }

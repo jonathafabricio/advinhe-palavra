@@ -9,6 +9,11 @@ input {
     margin-right: 0.8rem;
 }
 
+.letterInput::placeholder {
+    font-size: 12px;
+    color: #999;
+  }
+
 .points span {
     font-weight: bold;
 }
