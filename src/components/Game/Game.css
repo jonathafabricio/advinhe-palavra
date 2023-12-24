@@ -26,6 +26,7 @@ input {
 
 .wordContainer {
     display: flex;
+    flex-wrap: wrap;
     margin: 1.5rem;
     padding: 1.5rem;
     border: 20px solid darkred;
@@ -40,5 +41,27 @@ input {
     background-color: white;
     color: black;
     font-weight: bold;
+}
+
+@media (max-width: 1000px) {
+    .letter, .blankSquare {
+        font-size: 1.5rem;
+        width: 4rem;
+        height: 4rem;
+    }
+    .wordContainer {
+        border: 15px solid darkred;;
+    }
+}
+
+@media (max-width: 600px) {
+    .letter, .blankSquare {
+        font-size: 1.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    .wordContainer {
+        border: 10px solid darkred;;
+    }
 }
 
