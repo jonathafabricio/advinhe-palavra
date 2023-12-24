@@ -47,6 +47,7 @@ function App() {
     setLetters(wordLetters)
     setGuesses(guessesQty)
     setGameStage(stages[1].name)
+    setShowModal(false)
   }, [pickWordAndCategory])
 
   const verifyLetter = (letter) => {
@@ -81,15 +82,18 @@ function App() {
   }, [guesses])
 
   useEffect(() => {
-    const uniqueLetters = new Set(letters)
-    const hasGuessedAllLetters = [...uniqueLetters].every(normalizedLetter => 
-      guessedLetters.includes(normalizedLetter)
-    )
-    if (hasGuessedAllLetters) {
-      setScore((actualScore) => (actualScore += 100))
-      setShowModal(true)
+    if (letters.length > 0 && gameStage === "game") {
+      const uniqueLetters = new Set(letters)
+      const hasGuessedAllLetters = [...uniqueLetters].every(normalizedLetter => 
+        guessedLetters.includes(normalizedLetter)
+      )
+      if (hasGuessedAllLetters) {
+        setScore((actualScore) => (actualScore += 100))
+        setShowModal(true)
+      }
     }
-  }, [guessedLetters, letters])
+  }, [guessedLetters, letters, gameStage])
+  
 
   const closeModal = () => {
     setShowModal(false)
