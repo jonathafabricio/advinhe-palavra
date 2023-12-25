@@ -5,7 +5,7 @@ function formatCategoryName(category) {
   return category
     .replace(/([A-Z])/g, ' $1')
     .trim()
-    .toUpperCase();
+    .toUpperCase()
 }
 
 const Game = ({
@@ -33,21 +33,34 @@ const Game = ({
         letterInputRef.current.focus()
     }
 
-    const formattedCategory = formatCategoryName(pickedCategory);
+    const formattedCategory = formatCategoryName(pickedCategory)
+    const isComposedWord = pickedWord.includes(" ")
+    const wordsArray = pickedWord.split(" ")
 
     const renderLetterBoxes = () => {
-        return letters.map((letter, i) => {
-            if (letter === ' ') {
-                return <div key={i} className="space"></div>;
-            } else {
+        if (isComposedWord) {
+            return wordsArray.map((word, wordIndex) => (
+                <div key={wordIndex} className="word">
+                    {word.split("").map((letter, letterIndex) => {
+                        const normalizedLetter = normalizeLetter(letter)
+                        return guessedLetters.includes(normalizedLetter) ? (
+                            <span key={letterIndex} className='letter'>{letter}</span>
+                        ) : (
+                            <span key={letterIndex} className='blankSquare'></span>
+                        )
+                    })}
+                </div>
+            ))
+        } else {
+            return letters.map((letter, i) => {
                 return guessedLetters.includes(normalizeLetter(letter)) ? (
                     <span key={i} className='letter'>{letter}</span>
                 ) : (
                     <span key={i} className='blankSquare'></span>
-                );
-            }
-        });
-    };
+                )
+            })
+        }
+    }
 
     return (
         <div className="game">
@@ -58,7 +71,7 @@ const Game = ({
             <h3 className="tip">
                 Dica sobre a palavra: <span>{formattedCategory}</span>
             </h3>
-            <p>Você ainda tem {guesses} tentativa(s).</p>
+            <p>Você ainda tem {guesses} tentativa(s)</p>
             <div className="wordContainer">
                 {renderLetterBoxes()}
             </div>

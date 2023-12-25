@@ -14,7 +14,7 @@ const stages = [
 
 function App() {
   const [gameStage, setGameStage] = useState(stages[0].name)
-  const [words] = useState(wordsList)
+  const [availableWords, setAvailableWords] = useState(wordsList)
   const [pickedWord, setPickedWord] = useState("")
   const [pickedCategory, setPickedCategory] = useState("")
   const [letters, setLetters] = useState([])
@@ -30,20 +30,35 @@ function App() {
   }
 
   const pickWordAndCategory = useCallback(() => {
-    const categories = Object.keys(words)
-    const category = categories[Math.floor(Math.random() * Object.keys(categories).length)]
-    const word = words[category][Math.floor(Math.random() * words[category].length)]
+    if (Object.keys(availableWords).length === 0) {
+      setAvailableWords(wordsList)
+    }
+
+    const categories = Object.keys(availableWords)
+    const category = categories[Math.floor(Math.random() * categories.length)]
+    const wordIndex = Math.floor(Math.random() * availableWords[category].length)
+    const word = availableWords[category][wordIndex]
+
+    const newWordsList = { ...availableWords }
+    newWordsList[category].splice(wordIndex, 1)
+    if (newWordsList[category].length === 0) {
+      delete newWordsList[category]
+    }
+    setAvailableWords(newWordsList)
+
     return { word, category }
-  }, [words])
+  }, [availableWords])
 
   const startGame = useCallback(() => {
     clearLetterStates()
     const { word, category } = pickWordAndCategory()
     let wordLetters = word.split("")
     wordLetters = wordLetters.map((letter) => normalizeLetter(letter))
+    const spaceGuessed = wordLetters.includes(' ') ? [' '] : []
     setPickedWord(word)
     setPickedCategory(category)
     setLetters(wordLetters)
+    setGuessedLetters(spaceGuessed)
     setGuesses(numTentativas)
     setGameStage(stages[1].name)
   }, [pickWordAndCategory, numTentativas])
