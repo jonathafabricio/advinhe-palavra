@@ -35,6 +35,20 @@ const Game = ({
 
     const formattedCategory = formatCategoryName(pickedCategory);
 
+    const renderLetterBoxes = () => {
+        return letters.map((letter, i) => {
+            if (letter === ' ') {
+                return <div key={i} className="space"></div>;
+            } else {
+                return guessedLetters.includes(normalizeLetter(letter)) ? (
+                    <span key={i} className='letter'>{letter}</span>
+                ) : (
+                    <span key={i} className='blankSquare'></span>
+                );
+            }
+        });
+    };
+
     return (
         <div className="game">
             <p className="points">
@@ -46,13 +60,7 @@ const Game = ({
             </h3>
             <p>Você ainda tem {guesses} tentativa(s).</p>
             <div className="wordContainer">
-                {letters.map((letter, i) =>
-                    guessedLetters.includes(normalizeLetter(letter)) ? (
-                        <span key={i} className='letter'>{letter}</span>
-                    ) : (
-                        <span key={i} className='blankSquare'></span>
-                    )
-                )}
+                {renderLetterBoxes()}
             </div>
             <div className="letterContainer">
                 <p>Tente advinhar uma letra da palavra:</p>

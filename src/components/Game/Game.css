@@ -46,6 +46,13 @@ input {
     font-weight: bold;
 }
 
+.space {
+    width: 5rem;
+    height: 5rem;
+    display: inline-block;
+  }
+  
+
 @media (max-width: 1000px) {
     .letter, .blankSquare {
         font-size: 1.5rem;
@@ -55,6 +62,10 @@ input {
     .wordContainer {
         border: 15px solid darkred;;
     }
+    .space {
+        width: 4rem;
+        height: 4rem;
+      }
 }
 
 @media (max-width: 600px) {
@@ -66,5 +77,9 @@ input {
     .wordContainer {
         border: 10px solid darkred;;
     }
+    .space {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
 }
 
