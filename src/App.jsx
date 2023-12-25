@@ -5,6 +5,7 @@ import StartScreen from './components/StartScreen/StartScreen'
 import Game from './components/Game/Game'
 import GameOver from './components/GameOver/GameOver'
 import CongratsModal from './components/CongratsModal/CongratsModal'
+import Scoreboard from './components/Scoreboard/Scoreboard'
 
 const stages = [
   { id: 1, name: "start" },
@@ -23,11 +24,34 @@ function App() {
   const [guesses, setGuesses] = useState(3)
   const [numTentativas, setNumTentativas] = useState(3)
   const [score, setScore] = useState(0)
+  const [scorePlayer1, setScorePlayer1] = useState(0)
+  const [scorePlayer2, setScorePlayer2] = useState(0)
   const [showModal, setShowModal] = useState(false)
 
   const normalizeLetter = (letter) => {
     return letter.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase()
   }
+
+  const increaseScorePlayer1 = () => {
+    setScorePlayer1(scorePlayer1 + 1)
+  }
+  
+  const decreaseScorePlayer1 = () => {
+    if (scorePlayer1 > 0) {
+      setScorePlayer1(scorePlayer1 - 1)
+    }
+  }
+  
+  const increaseScorePlayer2 = () => {
+    setScorePlayer2(scorePlayer2 + 1)
+  }
+  
+  const decreaseScorePlayer2 = () => {
+    if (scorePlayer2 > 0) {
+      setScorePlayer2(scorePlayer2 - 1)
+    }
+  }
+  
 
   const pickWordAndCategory = useCallback(() => {
     if (Object.keys(availableWords).length === 0) {
@@ -121,22 +145,31 @@ function App() {
   return (
     <div>
       {gameStage === "start" && <StartScreen startGame={startGame} numTentativas={numTentativas} setNumTentativas={setNumTentativas} />}
+      
       {gameStage === "game" &&
-        <Game
-          verifyLetter={verifyLetter}
-          pickedWord={pickedWord}
-          pickedCategory={pickedCategory}
-          letters={letters}
-          guessedLetters={guessedLetters}
-          wrongLetters={wrongLetters}
-          guesses={guesses}
-          score={score}
-          normalizeLetter={normalizeLetter}
-        />}
+        <>
+          <Game
+            verifyLetter={verifyLetter}
+            pickedWord={pickedWord}
+            pickedCategory={pickedCategory}
+            letters={letters}
+            guessedLetters={guessedLetters}
+            wrongLetters={wrongLetters}
+            guesses={guesses}
+            score={score}
+            normalizeLetter={normalizeLetter}
+          />
+          <div className="scoreboards">
+            <Scoreboard score={scorePlayer1} onIncrease={increaseScorePlayer1} onDecrease={decreaseScorePlayer1} />
+            <Scoreboard score={scorePlayer2} onIncrease={increaseScorePlayer2} onDecrease={decreaseScorePlayer2} />
+          </div>
+        </>
+      }
+
       {gameStage === "end" && <GameOver retry={retry} score={score} />}
       {showModal && <CongratsModal onClose={closeModal} />}
     </div>
   )
 }
 
-export default App
+export default App;
