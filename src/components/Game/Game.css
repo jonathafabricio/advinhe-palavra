@@ -33,10 +33,13 @@ input {
 }
 
 .letter, .blankSquare {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 70px;
     border: 3px solid black;
-    width: 6rem;
-    height: 6rem;
+    width: 5rem;
+    height: 5rem;
     text-transform: uppercase;
     background-color: white;
     color: black;

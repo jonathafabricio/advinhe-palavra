@@ -6,5 +6,20 @@
     margin-bottom: 2em;
     color: #fff;
   }
+
+  .start select, .start input {
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    background-color: white; 
+  }
   
+  .start select:focus, .start input:focus {
+    outline: none;
+    border-color: #aaa;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
   

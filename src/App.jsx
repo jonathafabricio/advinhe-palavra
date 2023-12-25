@@ -12,8 +12,6 @@ const stages = [
   { id: 3, name: "end" }
 ]
 
-const guessesQty = 3 //número de tentativas
-
 function App() {
   const [gameStage, setGameStage] = useState(stages[0].name)
   const [words] = useState(wordsList)
@@ -22,7 +20,8 @@ function App() {
   const [letters, setLetters] = useState([])
   const [guessedLetters, setGuessedLetters] = useState([])
   const [wrongLetters, setWrongLetters] = useState([])
-  const [guesses, setGuesses] = useState(guessesQty)
+  const [guesses, setGuesses] = useState(3)
+  const [numTentativas, setNumTentativas] = useState(3)
   const [score, setScore] = useState(0)
   const [showModal, setShowModal] = useState(false)
 
@@ -45,10 +44,9 @@ function App() {
     setPickedWord(word)
     setPickedCategory(category)
     setLetters(wordLetters)
-    setGuesses(guessesQty)
+    setGuesses(numTentativas)
     setGameStage(stages[1].name)
-    setShowModal(false)
-  }, [pickWordAndCategory])
+  }, [pickWordAndCategory, numTentativas])
 
   const verifyLetter = (letter) => {
     const normalizedLetter = normalizeLetter(letter)
@@ -93,7 +91,6 @@ function App() {
       }
     }
   }, [guessedLetters, letters, gameStage])
-  
 
   const closeModal = () => {
     setShowModal(false)
@@ -102,13 +99,13 @@ function App() {
 
   const retry = () => {
     setScore(0)
-    setGuesses(guessesQty)
+    setGuesses(numTentativas)
     setGameStage(stages[0].name)
   }
 
   return (
     <div>
-      {gameStage === "start" && <StartScreen startGame={startGame} />}
+      {gameStage === "start" && <StartScreen startGame={startGame} numTentativas={numTentativas} setNumTentativas={setNumTentativas} />}
       {gameStage === "game" &&
         <Game
           verifyLetter={verifyLetter}
